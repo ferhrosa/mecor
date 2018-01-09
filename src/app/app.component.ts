@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { Router } from '@angular/router';
+import { Configurations } from './shared/configurations.service';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,11 @@ import { AngularFireDatabase } from 'angularfire2/database';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
 
-  constructor(private angularFire: AngularFireDatabase) {
-    
+  constructor(private router: Router) {
+    if (!Configurations.getFirebaseAppConfig()) {
+      this.router.navigateByUrl('/configure');
+    }
   }
 
 }
