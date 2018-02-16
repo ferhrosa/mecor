@@ -10,7 +10,7 @@ import { Configurations } from './shared/configurations.service';
 export class AppComponent {
 
   constructor(private router: Router) {
-    if (!Configurations.getFirebaseAppConfig()) {
+    if (!Configurations.isConfigured()) {
       this.router.navigateByUrl('/configure');
     }
   }
