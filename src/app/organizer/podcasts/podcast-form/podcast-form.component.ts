@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { lists } from '../../../shared/lists';
 import { Podcast } from '../../../shared/podcast.model';
 
 @Component({
@@ -22,7 +23,7 @@ export class PodcastFormComponent implements OnInit {
   }
 
   form_submit() {
-    this.angularFire.list('podcast')
+    this.angularFire.list(lists.podcast)
       .push(this.podcast)
       .then(t => {
         console.log(`Podcast added: ${t.key}`);
