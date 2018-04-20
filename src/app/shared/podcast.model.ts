@@ -1,3 +1,4 @@
 export class Podcast {
-    nome: string;
+    name: string;
+    feedUrl: string;
 }

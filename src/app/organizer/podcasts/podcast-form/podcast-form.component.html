@@ -1,0 +1,12 @@
+<h2>Podcast</h2>
+
+<form #f="ngForm" (submit)="form_submit()">
+  <input type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name">
+  <br>
+  <input type="text" [(ngModel)]="podcast.feedUrl" name="feedUrl" placeholder="Feed URL">
+  <br>
+  <button type="submit">Save</button>
+</form>
+
+TODO: remove this: {{podcast.name}}<br>
+TODO: remove this: {{podcast.feedUrl}}<br>

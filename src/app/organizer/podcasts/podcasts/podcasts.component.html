@@ -1,3 +1,7 @@
-<p>
-  podcasts works!
-</p>
+<button type="button" routerLink="/podcasts/add">Add</button>
+
+<ul>
+  <li *ngFor="let podcast of podcasts | async">
+    {{podcast.name}}
+  </li>
+</ul>

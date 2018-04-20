@@ -1,7 +1,7 @@
 import { FirebaseAppConfig } from "angularfire2";
 
 
-const firebasePrefix: string = "firebase-";
+const firebasePrefix: string = "mecor-firebase-";
 
 export class Configurations {
 
