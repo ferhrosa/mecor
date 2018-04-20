@@ -1,4 +1,4 @@
-import { Consumable } from "./consumable.model";
+import { Consumable } from './consumable.model';
 
 export class SeriesEpisode extends Consumable {
     overallNumber: number;
