@@ -2,6 +2,6 @@
 
 <ul>
   <li *ngFor="let podcast of podcasts | async">
-    {{podcast.name}}
+    <a routerLink="/podcasts/{{podcast.key}}">{{podcast.name}}</a>
   </li>
 </ul>

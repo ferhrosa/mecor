@@ -1,12 +1,17 @@
+<button type="button" routerLink="/podcasts">Back to list</button>
+
 <h2>Podcast</h2>
 
-<form #f="ngForm" (submit)="form_submit()">
+<form #f="ngForm" (submit)="form_submit()" *ngIf="podcast">
   <input type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name">
   <br>
   <input type="text" [(ngModel)]="podcast.feedUrl" name="feedUrl" placeholder="Feed URL">
   <br>
   <button type="submit">Save</button>
+  
+  <h4>Series</h4>
+  <div *ngFor="let serie of podcast.series">
+    {{serie.name}}
+    <button type="button" onclick="removeSerie(serie)">X</button>
+  </div>
 </form>
-
-TODO: remove this: {{podcast.name}}<br>
-TODO: remove this: {{podcast.feedUrl}}<br>

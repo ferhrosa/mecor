@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { lists } from '../../../shared/lists';
-import { Podcast } from '../../../shared/podcast.model';
+import { Podcast, PodcastSerie } from '../../../shared/podcast.model';
 
 @Component({
   selector: 'app-podcast-form',
@@ -12,24 +12,43 @@ import { Podcast } from '../../../shared/podcast.model';
 export class PodcastFormComponent implements OnInit {
 
   podcast: Podcast;
+  serie = new PodcastSerie();
 
   constructor(
-    private angularFire: AngularFireDatabase,
+    private db: AngularFireDatabase,
     private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.podcast = new Podcast();
+    this.route.params.subscribe(params => {
+      let key = params['key'];
+
+      if (key) {
+        this.db.object(`${lists.podcast}/${key}`).valueChanges().subscribe(o => {
+          this.podcast = <Podcast>o;
+          this.podcast.key = key;
+        });
+      }
+      else {
+        this.podcast = new Podcast();
+      }
+    });
   }
 
   form_submit() {
-    this.angularFire.list(lists.podcast)
+    this.db.list(lists.podcast)
       .push(this.podcast)
       .then(t => {
         console.log(`Podcast added: ${t.key}`);
         this.router.navigateByUrl('/podcasts');
       }),
       (e: any) => console.log(e.message);
+  }
+
+  addSerie() {
+    this.podcast.series.push(this.serie);
+    this.serie = new PodcastSerie();
   }
 
 }
