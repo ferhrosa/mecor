@@ -2,6 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatSidenavModule, MatListModule, MatTabsModule, MatTableModule,
+  MatButtonModule, MatCardModule, MatIconModule, MatInputModule,
+  MatDatepickerModule, MatNativeDateModule, MAT_DATE_LOCALE,
+  MatSelectModule,
+} from '@angular/material';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -19,6 +26,10 @@ import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.compo
     CommonModule,
     RouterModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatSidenavModule, MatListModule, MatTabsModule, MatTableModule,
+    MatButtonModule, MatCardModule, MatIconModule, MatInputModule,
+    MatDatepickerModule, MatNativeDateModule, MatSelectModule,
     AngularFireModule.initializeApp(Configurations.getFirebaseAppConfig()),
     AngularFireDatabaseModule,
   ],
@@ -29,6 +40,7 @@ import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.compo
     PodcastFormComponent
   ],
   providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     AngularFireDatabase,
   ]
 })
