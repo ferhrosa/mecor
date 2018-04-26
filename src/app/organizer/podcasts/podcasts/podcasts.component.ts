@@ -17,8 +17,8 @@ export class PodcastsComponent implements OnInit {
 
   podcasts: Observable<Podcast[]>;
 
-  constructor(private db: AngularFireDatabase) { 
-    this.podcasts = Entity.FromFirebaseSnapshot<Podcast>(db, lists.podcast);
+  constructor(private db: AngularFireDatabase) {
+    this.podcasts = Entity.getList<Podcast>(db, lists.podcast);
   }
 
   ngOnInit() {

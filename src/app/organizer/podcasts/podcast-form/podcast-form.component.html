@@ -2,16 +2,23 @@
 
 <h2>Podcast</h2>
 
-<form #f="ngForm" (submit)="form_submit()" *ngIf="podcast">
+<form #f="ngForm" *ngIf="podcast; else loading">
+
   <input type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name">
   <br>
   <input type="text" [(ngModel)]="podcast.feedUrl" name="feedUrl" placeholder="Feed URL">
   <br>
-  <button type="submit">Save</button>
-  
+  <button type="button" (click)="save()">Save</button>
+
   <h4>Series</h4>
   <div *ngFor="let serie of podcast.series">
     {{serie.name}}
-    <button type="button" onclick="removeSerie(serie)">X</button>
+    <button type="button" (click)="removeSerie(serie)">X</button>
   </div>
+  
+  <input type="text" [(ngModel)]="serie.name" name="serie.name" placeholder="New serie name">
+  <button type="button" (click)="addSerie()">Add serie</button>
+
 </form>
+
+<ng-template #loading>Loading...</ng-template>
