@@ -19,22 +19,31 @@
     <mat-card-title>Series</mat-card-title>
 
     <mat-card-content *ngIf="podcast; else loading">
+      
       <mat-list>
         <mat-list-item *ngFor="let serie of podcast.series">
           <button mat-icon-button type="button" (click)="removeSerie(serie)" matTooltip="Remove serie" style="float: right">
             <mat-icon>delete</mat-icon>
           </button>
-          <h3 matLine>{{serie.name}}</h3>
+          
+          <h3 matLine>
+            <label>Name:</label>
+            {{serie.name}}
+          </h3>
+          
           <p matLine *ngIf="serie.patterns && serie.patterns.length">
             <mat-chip-list>
-              <mat-chip *ngFor="let pattern of serie.patterns">{{pattern}}</mat-chip>
+              <label style="margin-right: 10px">Patterns:</label>
+              
+              <mat-chip *ngFor="let pattern of serie.patterns">
+                {{pattern}}
+                <mat-icon matTooltip="Remove pattern" (click)="removePattern(serie, pattern)" style="margin-left: 5px; cursor: pointer">delete</mat-icon>
+              </mat-chip>
+              
+              <button mat-icon-button type="button" color="accent" matTooltip="Add pattern" (click)="addPattern(serie)">
+                <mat-icon>add</mat-icon>
+              </button>
             </mat-chip-list>
-          </p>
-          <p matLine>
-            <mat-form-field>
-              <input matInput type="text" #newPattern name="pattern" placeholder="New serie title pattern">
-            </mat-form-field>
-            <button mat-button color="accent" type="button" (click)="addPattern(serie, newPattern.value); newPattern.value = '';">Add pattern to serie</button>
           </p>
         </mat-list-item>
       </mat-list>
@@ -47,14 +56,6 @@
       <button mat-button color="accent" type="button" (click)="addSerie()">Add serie to podcast</button>
     </mat-card-content>
   </mat-card>
-
-  <!--
-  <h4>Series</h4>
-  <div *ngFor="let serie of podcast.series">
-    {{serie.name}}
-    <button mat-icon-button type="button" (click)="removeSerie(serie)">X</button>
-  </div>
-  -->
 
 </form>
 

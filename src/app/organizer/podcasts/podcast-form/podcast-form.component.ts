@@ -66,13 +66,15 @@ export class PodcastFormComponent implements OnInit {
 
   removeSerie(serie: PodcastSerie) {
     this.podcast.series.splice(this.podcast.series.indexOf(serie), 1);
-    console.dir(this.podcast.series);
   }
 
-  addPattern(serie: PodcastSerie, pattern: string) {
-    serie.patterns = (serie.patterns || []);
-    serie.patterns.push(pattern);
-    //this.pattern = '';
+  addPattern(serie: PodcastSerie) {
+    let pattern = prompt('Name of the pattern do add:');
+    if (pattern) { serie.patterns.push(pattern); }
+  }
+
+  removePattern(serie: PodcastSerie, pattern: string) {
+    serie.patterns.splice(serie.patterns.indexOf(pattern), 1);
   }
 
 }
