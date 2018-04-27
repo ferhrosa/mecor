@@ -1,7 +1,20 @@
-<button type="button" routerLink="/podcasts/add">Add</button>
+<button mat-raised-button type="button" routerLink="/podcasts/add">Add</button>
 
-<ul>
+<!-- <ul>
   <li *ngFor="let podcast of podcasts | async">
     <a routerLink="/podcasts/{{podcast.key}}">{{podcast.name}}</a>
   </li>
-</ul>
+</ul> -->
+
+<mat-card style="margin-top: 15px;">
+  <mat-card-title>Podcasts</mat-card-title>
+  <mat-card-content>
+    <mat-nav-list *ngIf="podcasts | async; else loading">
+      <a mat-list-item routerLink="/podcasts/{{podcast.key}}" *ngFor="let podcast of podcasts | async"> {{ podcast.name }} </a>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

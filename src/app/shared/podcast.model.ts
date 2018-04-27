@@ -8,5 +8,5 @@ export class Podcast extends Entity {
 
 export class PodcastSerie {
     name: string;
-    formats: Array<string>;
+    patterns: Array<string>;
 }

@@ -7,7 +7,7 @@ import {
   MatSidenavModule, MatListModule, MatTabsModule, MatTableModule,
   MatButtonModule, MatCardModule, MatIconModule, MatInputModule,
   MatDatepickerModule, MatNativeDateModule, MAT_DATE_LOCALE,
-  MatSelectModule,
+  MatSelectModule, MatProgressBarModule, MatTooltipModule, MatChipsModule,
 } from '@angular/material';
 
 import { AngularFireModule } from 'angularfire2';
@@ -27,9 +27,12 @@ import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.compo
     RouterModule,
     FormsModule,
     BrowserAnimationsModule,
+    // Angular Material modules
     MatSidenavModule, MatListModule, MatTabsModule, MatTableModule,
     MatButtonModule, MatCardModule, MatIconModule, MatInputModule,
     MatDatepickerModule, MatNativeDateModule, MatSelectModule,
+    MatProgressBarModule, MatTooltipModule, MatChipsModule,
+    // Firebase modules
     AngularFireModule.initializeApp(Configurations.getFirebaseAppConfig()),
     AngularFireDatabaseModule,
   ],

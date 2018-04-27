@@ -14,6 +14,7 @@ export class PodcastFormComponent implements OnInit {
 
   podcast: Podcast;
   serie = new PodcastSerie();
+  pattern = '';
 
   constructor(
     private db: AngularFireDatabase,
@@ -66,6 +67,12 @@ export class PodcastFormComponent implements OnInit {
   removeSerie(serie: PodcastSerie) {
     this.podcast.series.splice(this.podcast.series.indexOf(serie), 1);
     console.dir(this.podcast.series);
+  }
+
+  addPattern(serie: PodcastSerie, pattern: string) {
+    serie.patterns = (serie.patterns || []);
+    serie.patterns.push(pattern);
+    //this.pattern = '';
   }
 
 }
