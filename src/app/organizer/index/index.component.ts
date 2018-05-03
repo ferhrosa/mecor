@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-index',
@@ -8,11 +7,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 })
 export class IndexComponent implements OnInit {
 
-  constructor(private angularFire: AngularFireDatabase) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.angularFire.list("teste").push({name: 'teste'})
-      .then(console.dir);
-  }
+  ngOnInit() { }
 
 }

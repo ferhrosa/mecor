@@ -11,7 +11,7 @@ import {
 } from '@angular/material';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 
 import { Configurations } from '../shared/configurations.service';
 
@@ -35,7 +35,7 @@ import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-ep
     MatProgressBarModule, MatTooltipModule, MatChipsModule,
     // Firebase modules
     AngularFireModule.initializeApp(Configurations.getFirebaseAppConfig()),
-    AngularFireDatabaseModule,
+    AngularFirestoreModule,
   ],
   declarations: [
     IndexComponent,
@@ -46,7 +46,6 @@ import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-ep
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    AngularFireDatabase,
   ]
 })
 export class OrganizerModule { }

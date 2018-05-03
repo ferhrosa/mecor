@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs/Observable';
-import { DataSnapshot } from 'firebase/database';
+import * as firebase from 'firebase/app';
 import { FirebaseApp } from 'angularfire2';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 export class Entity {
     public key: string;
-    
+
     public static toSaveable<T extends Entity>(entity: T): T {
         let saveable = {} as T;
         Object.assign(saveable, entity);
@@ -13,23 +13,25 @@ export class Entity {
         return saveable;
     }
 
-    protected static fromFirebasePayload<T extends Entity>(payload: DataSnapshot): T {
-        let entity = payload.val() as T;
-        entity.key = payload.key;
-        return entity;
-    }
-
-    public static getList<T extends Entity>(db: AngularFireDatabase, listPath: string): Observable<T[]> {
-        return db.list(listPath).snapshotChanges().map(
+    public static getList<T extends Entity>(db: AngularFirestore, listPath: string): Observable<T[]> {
+        return db.collection(listPath).snapshotChanges().map(
             actions => actions.map(
-                a => Entity.fromFirebasePayload<T>(a.payload)
+                a => {
+                    let entity = a.payload.doc.data() as T;
+                    entity.key = a.payload.doc.id;
+                    return entity;
+                }
             )
         );
     }
 
-    public static getObject<T extends Entity>(db: AngularFireDatabase, listPath: string, key: string): Observable<T> {
-        return db.object<T>(`${listPath}/${key}`).snapshotChanges().map(
-            a => Entity.fromFirebasePayload<T>(a.payload)
+    public static getObject<T extends Entity>(db: AngularFirestore, listPath: string, key: string): Observable<T> {
+        return db.collection(listPath).doc(key).valueChanges().map(
+            doc => {
+                let entity = doc as T;
+                entity.key = key;
+                return entity;
+            }
         );
     }
 }

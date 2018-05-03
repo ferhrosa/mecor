@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { lists } from '../../../shared/lists';
 import { Podcast, PodcastSerie } from '../../../shared/podcast.model';
 import { Entity } from '../../../shared/entity.model';
@@ -17,7 +17,7 @@ export class PodcastFormComponent implements OnInit {
   pattern = '';
 
   constructor(
-    private db: AngularFireDatabase,
+    private db: AngularFirestore,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -40,7 +40,7 @@ export class PodcastFormComponent implements OnInit {
     console.dir(this.podcast);
 
     if (this.podcast.key) {
-      this.db.object(`${lists.podcast}/${this.podcast.key}`)
+      this.db.doc(`${lists.podcast}/${this.podcast.key}`)
         .update(Entity.toSaveable(this.podcast))
         .then(t => {
           console.log(`Podcast updated: ${this.podcast}`);
@@ -48,10 +48,10 @@ export class PodcastFormComponent implements OnInit {
         });
     }
     else {
-      this.db.list(lists.podcast)
-        .push(Entity.toSaveable(this.podcast))
+      this.db.collection(lists.podcast)
+        .add(Entity.toSaveable(this.podcast))
         .then(t => {
-          console.log(`Podcast added: ${t.key}`);
+          console.log(`Podcast added: ${t.id}`);
           this.router.navigateByUrl('/podcasts');
         });
       //,(e: any) => console.log(e.message);
