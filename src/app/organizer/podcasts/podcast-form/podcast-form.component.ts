@@ -37,19 +37,20 @@ export class PodcastFormComponent implements OnInit {
   }
 
   save(): void {
-    console.dir(this.podcast);
+
+    let toSave = Entity.toSaveable(this.podcast); 
 
     if (this.podcast.key) {
       this.db.doc(`${lists.podcast}/${this.podcast.key}`)
-        .update(Entity.toSaveable(this.podcast))
+        .update(toSave)
         .then(t => {
-          console.log(`Podcast updated: ${this.podcast}`);
+          console.log(`Podcast updated: ${JSON.stringify(toSave)}`);
           this.router.navigateByUrl('/podcasts');
         });
     }
     else {
       this.db.collection(lists.podcast)
-        .add(Entity.toSaveable(this.podcast))
+        .add(toSave)
         .then(t => {
           console.log(`Podcast added: ${t.id}`);
           this.router.navigateByUrl('/podcasts');
@@ -70,6 +71,7 @@ export class PodcastFormComponent implements OnInit {
 
   addPattern(serie: PodcastSerie) {
     let pattern = prompt('Name of the pattern do add:');
+    serie.patterns = (serie.patterns || []);
     if (pattern) { serie.patterns.push(pattern); }
   }
 
