@@ -1,63 +1,83 @@
 <button mat-raised-button type="button" routerLink="/podcasts">Back to list</button>
 <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
 
-<form #f="ngForm">
+<mat-card style="margin-top: 15px;">
+  <mat-card-title>Podcast</mat-card-title>
 
-  <mat-card style="margin-top: 15px;">
-    <mat-card-title>Podcast</mat-card-title>
-    <mat-card-content *ngIf="podcast; else loading">
-      <mat-form-field>
-        <input matInput type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" [(ngModel)]="podcast.feedUrl" name="feedUrl" placeholder="Feed URL">
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
+  <mat-card-content *ngIf="podcast; else loading">
+    <mat-form-field>
+      <input matInput type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name">
+    </mat-form-field>
 
-  <mat-card style="margin-top: 15px;">
-    <mat-card-title>Series</mat-card-title>
+    <mat-divider></mat-divider>
 
-    <mat-card-content *ngIf="podcast; else loading">
-      
-      <mat-list>
-        <mat-list-item *ngFor="let serie of podcast.series">
-          <button mat-icon-button type="button" (click)="removeSerie(serie)" matTooltip="Remove serie" style="float: right">
+    <h2>Feeds</h2>
+
+    <mat-list>
+      <div *ngFor="let feed of podcast.feeds">
+        <mat-list-item>
+          <button mat-icon-button type="button" (click)="removeFeed(feed)" matTooltip="Remove feed" style="float: right">
             <mat-icon>delete</mat-icon>
           </button>
-          
+
           <h3 matLine>
-            <label>Name:</label>
-            {{serie.name}}
+            <label>URL:</label> {{ feed.url }}
           </h3>
-          
-          <p matLine>
-            <mat-chip-list>
-              <label style="margin-right: 10px">Patterns:</label>
-              
-              <mat-chip *ngFor="let pattern of serie.patterns">
-                {{pattern}}
-                <mat-icon matTooltip="Remove pattern" (click)="removePattern(serie, pattern)" style="margin-left: 5px; cursor: pointer">delete</mat-icon>
-              </mat-chip>
-              
-              <button mat-icon-button type="button" color="accent" matTooltip="Add pattern" (click)="addPattern(serie)">
-                <mat-icon>add</mat-icon>
-              </button>
-            </mat-chip-list>
-          </p>
+          <h6 matLine>Series:</h6>
         </mat-list-item>
-      </mat-list>
 
-      <mat-divider></mat-divider>
+        <mat-list style="margin-left: 30px">
+          <mat-list-item *ngFor="let serie of feed.series">
+            <button mat-icon-button type="button" (click)="removeSerie(feed, serie)" matTooltip="Remove serie" style="float: right">
+              <mat-icon>delete</mat-icon>
+            </button>
 
-      <mat-form-field>
-        <input matInput type="text" [(ngModel)]="serie.name" name="serie.name" placeholder="New serie name">
-      </mat-form-field>
-      <button mat-button color="accent" type="button" (click)="addSerie()">Add serie to podcast</button>
-    </mat-card-content>
-  </mat-card>
+            <h3 matLine>
+              <label>Name:</label>
+              {{serie.name}}
+            </h3>
 
-</form>
+            <p matLine>
+              <mat-chip-list>
+                <label style="margin-right: 10px">Patterns:</label>
+
+                <mat-chip *ngFor="let pattern of serie.patterns">
+                  {{pattern}}
+                  <mat-icon matTooltip="Remove pattern" (click)="removePattern(serie, pattern)" style="margin-left: 5px; cursor: pointer">delete</mat-icon>
+                </mat-chip>
+
+                <button mat-icon-button type="button" color="accent" matTooltip="Add pattern" (click)="addPattern(serie)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-chip-list>
+            </p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <form (submit)="addSerie(feed)">
+              <mat-form-field>
+                <input matInput type="text" [(ngModel)]="serie.name" name="serie.name" placeholder="Name for new serie">
+              </mat-form-field>
+              <button mat-button color="accent" type="submit">Add serie to feed</button>
+            </form>
+          </mat-list-item>
+
+        </mat-list>
+      </div>
+
+      <mat-list-item>
+        <form (submit)="addFeed()">
+          <mat-form-field>
+            <input matInput type="url" [(ngModel)]="feed.url" name="feed.url" placeholder="URL for new feed">
+          </mat-form-field>
+          <button mat-button color="accent" type="submit">Add feed to podcast</button>
+        </form>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-card-content>
+</mat-card>
+
 
 <ng-template #loading>
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>

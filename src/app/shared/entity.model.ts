@@ -1,5 +1,5 @@
 
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { FirebaseApp } from 'angularfire2';
@@ -8,13 +8,16 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export class Entity {
     public key: string;
 
-    public static toSaveable<T extends Entity>(entity: T): Object {
-        let saveable = Object.assign({}, entity as Object);
+    public static toSaveable<T extends Entity>(entity: T): T {
+        let saveable = Object.assign({}, entity as T);
 
         let convertArrays = (object) => {
             for (let item in object) {
-                if (Array.isArray(object[item])) {
+                if (typeof (object[item]) == "object") {
                     convertArrays(object[item]);
+                }
+
+                if (Array.isArray(object[item]) && typeof(object[item][0]) == "object") {
                     object[item] = (object[item] as Array<any>).map(obj => Object.assign({}, obj));
                 }
             }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { lists } from '../../../shared/lists';
-import { Podcast, PodcastSerie } from '../../../shared/podcast.model';
+import { Podcast, PodcastSerie, PodcastFeed } from '../../../shared/podcast.model';
 import { Entity } from '../../../shared/entity.model';
 
 @Component({
@@ -13,6 +13,7 @@ import { Entity } from '../../../shared/entity.model';
 export class PodcastFormComponent implements OnInit {
 
   podcast: Podcast;
+  feed = new PodcastFeed();
   serie = new PodcastSerie();
   pattern = '';
 
@@ -38,10 +39,10 @@ export class PodcastFormComponent implements OnInit {
 
   save(): void {
 
-    let toSave = Entity.toSaveable(this.podcast); 
+    let toSave = Entity.toSaveable(this.podcast);
 
     if (this.podcast.key) {
-      this.db.doc(`${lists.podcast}/${this.podcast.key}`)
+      this.db.doc<Podcast>(`${lists.podcast}/${this.podcast.key}`)
         .update(toSave)
         .then(t => {
           console.log(`Podcast updated: ${JSON.stringify(toSave)}`);
@@ -49,7 +50,7 @@ export class PodcastFormComponent implements OnInit {
         });
     }
     else {
-      this.db.collection(lists.podcast)
+      this.db.collection<Podcast>(lists.podcast)
         .add(toSave)
         .then(t => {
           console.log(`Podcast added: ${t.id}`);
@@ -59,14 +60,24 @@ export class PodcastFormComponent implements OnInit {
     }
   }
 
-  addSerie() {
-    this.podcast.series = (this.podcast.series || []);
-    this.podcast.series.push(this.serie);
+  addFeed() {
+    this.podcast.feeds = (this.podcast.feeds || []);
+    this.podcast.feeds.push(this.feed);
+    this.feed = new PodcastFeed();
+  }
+
+  removeFeed(feed: PodcastFeed) {
+    this.podcast.feeds.splice(this.podcast.feeds.indexOf(feed));
+  }
+
+  addSerie(feed: PodcastFeed) {
+    feed.series = (feed.series || []);
+    feed.series.push(this.serie);
     this.serie = new PodcastSerie();
   }
 
-  removeSerie(serie: PodcastSerie) {
-    this.podcast.series.splice(this.podcast.series.indexOf(serie), 1);
+  removeSerie(feed: PodcastFeed, serie: PodcastSerie) {
+    feed.series.splice(feed.series.indexOf(serie), 1);
   }
 
   addPattern(serie: PodcastSerie) {
