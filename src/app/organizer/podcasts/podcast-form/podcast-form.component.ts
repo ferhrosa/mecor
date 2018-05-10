@@ -38,7 +38,6 @@ export class PodcastFormComponent implements OnInit {
   }
 
   save(): void {
-
     let toSave = Entity.toSaveable(this.podcast);
 
     if (this.podcast.key) {
@@ -60,6 +59,17 @@ export class PodcastFormComponent implements OnInit {
     }
   }
 
+  delete() {
+    if (confirm('Are you sure you want to delete this podcast?')) {
+      this.db.doc<Podcast>(`${lists.podcast}/${this.podcast.key}`)
+        .delete()
+        .then(t => {
+          console.log(`Podcast removed: ${this.podcast.key}`);
+          this.router.navigateByUrl('/podcasts');
+        });
+    }
+  }
+
   addFeed() {
     this.podcast.feeds = (this.podcast.feeds || []);
     this.podcast.feeds.push(this.feed);
@@ -67,7 +77,9 @@ export class PodcastFormComponent implements OnInit {
   }
 
   removeFeed(feed: PodcastFeed) {
-    this.podcast.feeds.splice(this.podcast.feeds.indexOf(feed));
+    if (confirm('Are you sure you want to remove this podcast feed?')) {
+      this.podcast.feeds.splice(this.podcast.feeds.indexOf(feed));
+    }
   }
 
   addSerie(feed: PodcastFeed) {
@@ -77,7 +89,9 @@ export class PodcastFormComponent implements OnInit {
   }
 
   removeSerie(feed: PodcastFeed, serie: PodcastSerie) {
-    feed.series.splice(feed.series.indexOf(serie), 1);
+    if (confirm('Are you sure you want to remove this podcast serie?')) {
+      feed.series.splice(feed.series.indexOf(serie), 1);
+    }
   }
 
   addPattern(serie: PodcastSerie) {
@@ -87,7 +101,9 @@ export class PodcastFormComponent implements OnInit {
   }
 
   removePattern(serie: PodcastSerie, pattern: string) {
-    serie.patterns.splice(serie.patterns.indexOf(pattern), 1);
+    if (confirm('Are you sure you want to remove this podcast serie pattern?')) {
+      serie.patterns.splice(serie.patterns.indexOf(pattern), 1);
+    }
   }
 
 }

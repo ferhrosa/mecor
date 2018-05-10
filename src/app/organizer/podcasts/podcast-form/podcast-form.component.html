@@ -1,17 +1,38 @@
-<button mat-raised-button type="button" routerLink="/podcasts">Back to list</button>
-<button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
+<button mat-button type="button" (click)="delete()" style="float: right" *ngIf="podcast.key">
+  <mat-icon>delete</mat-icon>
+  Delete this podcast
+</button>
 
-<mat-card style="margin-top: 15px;">
-  <mat-card-title>Podcast</mat-card-title>
+<form #formPodcast="ngForm" id="form-podcast" (submit)="save()">
 
-  <mat-card-content *ngIf="podcast; else loading">
-    <mat-form-field>
-      <input matInput type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name">
-    </mat-form-field>
+  <button mat-raised-button type="button" routerLink="/podcasts">
+    <mat-icon>arrow_back</mat-icon>
+    Back to list
+  </button>
+  <button mat-raised-button color="primary" type="submit" form="form-podcast" [disabled]="!formPodcast.form.valid">
+    <mat-icon>save</mat-icon>
+    Save
+  </button>
 
-    <mat-divider></mat-divider>
+  <mat-card style="margin-top: 15px;">
+    <mat-card-title>Podcast</mat-card-title>
 
-    <h2>Feeds</h2>
+    <mat-card-content *ngIf="podcast; else loading">
+
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name" required>
+      </mat-form-field>
+
+
+    </mat-card-content>
+  </mat-card>
+
+</form>
+
+<mat-card style="margin-top: 20px">
+  <mat-card-title>Feeds</mat-card-title>
+
+  <mat-card-content>
 
     <mat-list>
       <div *ngFor="let feed of podcast.feeds">
@@ -54,11 +75,11 @@
           </mat-list-item>
 
           <mat-list-item>
-            <form (submit)="addSerie(feed)">
+            <form (submit)="addSerie(feed)" #formSerie="ngForm">
               <mat-form-field>
-                <input matInput type="text" [(ngModel)]="serie.name" name="serie.name" placeholder="Name for new serie">
+                <input matInput type="text" [(ngModel)]="serie.name" name="serie.name" placeholder="Name for new serie" required>
               </mat-form-field>
-              <button mat-button color="accent" type="submit">Add serie to feed</button>
+              <button mat-button color="accent" type="submit" [disabled]="!formSerie.form.valid">Add serie to feed</button>
             </form>
           </mat-list-item>
 
@@ -66,11 +87,11 @@
       </div>
 
       <mat-list-item>
-        <form (submit)="addFeed()">
+        <form (submit)="addFeed()" #formFeed="ngForm">
           <mat-form-field>
-            <input matInput type="url" [(ngModel)]="feed.url" name="feed.url" placeholder="URL for new feed">
+            <input matInput type="url" [(ngModel)]="feed.url" name="feed.url" placeholder="URL for new feed" required>
           </mat-form-field>
-          <button mat-button color="accent" type="submit">Add feed to podcast</button>
+          <button mat-button color="accent" type="submit" [disabled]="!formFeed.form.valid">Add feed to podcast</button>
         </form>
       </mat-list-item>
     </mat-list>
