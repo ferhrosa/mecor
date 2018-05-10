@@ -18,86 +18,83 @@
     <mat-card-title>Podcast</mat-card-title>
 
     <mat-card-content *ngIf="podcast; else loading">
-
       <mat-form-field>
         <input matInput type="text" [(ngModel)]="podcast.name" name="name" placeholder="Name" required>
       </mat-form-field>
+    </mat-card-content>
+  </mat-card>
 
+  <mat-card style="margin-top: 20px">
+    <mat-card-title>Feeds</mat-card-title>
+
+    <mat-card-content>
+
+      <mat-list>
+        <div *ngFor="let feed of podcast.feeds">
+          <mat-list-item style="height: auto">
+            <mat-form-field matLine>
+              <input matInput type="url" [(ngModel)]="feed.url" name="feed.url" placeholder="Feed URL" required>
+            </mat-form-field>
+
+            <h6 matLine>Series:</h6>
+
+            <button mat-icon-button type="button" (click)="removeFeed(feed)" matTooltip="Remove feed">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+
+          <mat-list style="margin-left: 30px">
+            <mat-list-item *ngFor="let serie of feed.series" style="height: auto">
+              <mat-form-field matLine>
+                <input matInput type="text" [(ngModel)]="serie.name" name="serie.name" placeholder="Serie name" required>
+              </mat-form-field>
+
+              <p matLine>
+                <mat-chip-list>
+                  <label style="margin-right: 10px">Patterns:</label>
+
+                  <mat-chip *ngFor="let pattern of serie.patterns">
+                    {{pattern}}
+                    <mat-icon matTooltip="Remove pattern" (click)="removePattern(serie, pattern)" style="margin-left: 5px; cursor: pointer">delete</mat-icon>
+                  </mat-chip>
+
+                  <button mat-icon-button type="button" color="accent" matTooltip="Add pattern" (click)="addPattern(serie)">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </mat-chip-list>
+              </p>
+
+              <button mat-icon-button type="button" (click)="removeSerie(feed, serie)" matTooltip="Remove serie">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </mat-list-item>
+
+            <mat-list-item>
+              <mat-form-field matLine>
+                <input matInput type="text" placeholder="Name for new serie" #newSerie (change)="addSerie(feed, newSerie.value); newSerie.value = ''; newSerie.focus();"
+                  matTooltip="Press TAB or exit this field to add the new serie">
+              </mat-form-field>
+            </mat-list-item>
+
+          </mat-list>
+
+          <mat-divider></mat-divider>
+        </div>
+
+        <mat-list-item>
+          <mat-form-field matLine>
+            <input matInput type="url" placeholder="URL for new feed" #newFeed (change)="addFeed2(newFeed.value); newFeed.value = ''; newFeed.focus();"
+              matTooltip="Press TAB or exit this field to add the new feed">
+          </mat-form-field>
+        </mat-list-item>
+
+      </mat-list>
 
     </mat-card-content>
   </mat-card>
 
 </form>
-
-<mat-card style="margin-top: 20px">
-  <mat-card-title>Feeds</mat-card-title>
-
-  <mat-card-content>
-
-    <mat-list>
-      <div *ngFor="let feed of podcast.feeds">
-        <mat-list-item>
-          <button mat-icon-button type="button" (click)="removeFeed(feed)" matTooltip="Remove feed" style="float: right">
-            <mat-icon>delete</mat-icon>
-          </button>
-
-          <h3 matLine>
-            <label>URL:</label> {{ feed.url }}
-          </h3>
-          <h6 matLine>Series:</h6>
-        </mat-list-item>
-
-        <mat-list style="margin-left: 30px">
-          <mat-list-item *ngFor="let serie of feed.series">
-            <button mat-icon-button type="button" (click)="removeSerie(feed, serie)" matTooltip="Remove serie" style="float: right">
-              <mat-icon>delete</mat-icon>
-            </button>
-
-            <h3 matLine>
-              <label>Name:</label>
-              {{serie.name}}
-            </h3>
-
-            <p matLine>
-              <mat-chip-list>
-                <label style="margin-right: 10px">Patterns:</label>
-
-                <mat-chip *ngFor="let pattern of serie.patterns">
-                  {{pattern}}
-                  <mat-icon matTooltip="Remove pattern" (click)="removePattern(serie, pattern)" style="margin-left: 5px; cursor: pointer">delete</mat-icon>
-                </mat-chip>
-
-                <button mat-icon-button type="button" color="accent" matTooltip="Add pattern" (click)="addPattern(serie)">
-                  <mat-icon>add</mat-icon>
-                </button>
-              </mat-chip-list>
-            </p>
-          </mat-list-item>
-
-          <mat-list-item>
-            <form (submit)="addSerie(feed)" #formSerie="ngForm">
-              <mat-form-field>
-                <input matInput type="text" [(ngModel)]="serie.name" name="serie.name" placeholder="Name for new serie" required>
-              </mat-form-field>
-              <button mat-button color="accent" type="submit" [disabled]="!formSerie.form.valid">Add serie to feed</button>
-            </form>
-          </mat-list-item>
-
-        </mat-list>
-      </div>
-
-      <mat-list-item>
-        <form (submit)="addFeed()" #formFeed="ngForm">
-          <mat-form-field>
-            <input matInput type="url" [(ngModel)]="feed.url" name="feed.url" placeholder="URL for new feed" required>
-          </mat-form-field>
-          <button mat-button color="accent" type="submit" [disabled]="!formFeed.form.valid">Add feed to podcast</button>
-        </form>
-      </mat-list-item>
-    </mat-list>
-
-  </mat-card-content>
-</mat-card>
 
 
 <ng-template #loading>

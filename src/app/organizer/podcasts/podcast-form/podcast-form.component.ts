@@ -13,8 +13,6 @@ import { Entity } from '../../../shared/entity.model';
 export class PodcastFormComponent implements OnInit {
 
   podcast: Podcast;
-  feed = new PodcastFeed();
-  serie = new PodcastSerie();
   pattern = '';
 
   constructor(
@@ -70,10 +68,12 @@ export class PodcastFormComponent implements OnInit {
     }
   }
 
-  addFeed() {
-    this.podcast.feeds = (this.podcast.feeds || []);
-    this.podcast.feeds.push(this.feed);
-    this.feed = new PodcastFeed();
+  addFeed(url: string) {
+    console.trace('passed addFeed2 / url: ' + url)
+    if (url) {
+      this.podcast.feeds = (this.podcast.feeds || []);
+      this.podcast.feeds.push({ url: url } as PodcastFeed);
+    }
   }
 
   removeFeed(feed: PodcastFeed) {
@@ -82,10 +82,11 @@ export class PodcastFormComponent implements OnInit {
     }
   }
 
-  addSerie(feed: PodcastFeed) {
-    feed.series = (feed.series || []);
-    feed.series.push(this.serie);
-    this.serie = new PodcastSerie();
+  addSerie(feed: PodcastFeed, name: string) {
+    if (name) {
+      feed.series = (feed.series || []);
+      feed.series.push({ name: name } as PodcastSerie);
+    }
   }
 
   removeSerie(feed: PodcastFeed, serie: PodcastSerie) {
