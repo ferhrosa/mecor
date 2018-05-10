@@ -3,9 +3,9 @@
 <mat-card style="margin-top: 15px;">
   <mat-card-title>Podcasts</mat-card-title>
   <mat-card-content>
-    <mat-progress-bar *ngIf="! podcasts | async" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="!loaded" mode="indeterminate"></mat-progress-bar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/podcasts/{{podcast.key}}" *ngFor="let podcast of podcasts | async"> {{ podcast.name }} </a>
+      <a mat-list-item routerLink="/podcasts/{{podcast.id}}" *ngFor="let podcast of podcasts | async"> {{ podcast.name }} </a>
     </mat-nav-list>
   </mat-card-content>
 </mat-card>

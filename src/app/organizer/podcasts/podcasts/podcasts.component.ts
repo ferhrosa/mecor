@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 
-import { lists } from '../../../shared/lists';
+import { collections } from '../../../shared/collections';
 import { Entity } from '../../../shared/entity.model';
 import { Podcast } from './../../../shared/podcast.model';
 
@@ -19,22 +19,10 @@ export class PodcastsComponent implements OnInit {
   loaded = false;
 
   constructor(private db: AngularFirestore) {
-    this.podcasts = Entity.getList<Podcast>(db, lists.podcast);
+    this.podcasts = Entity.getList<Podcast>(db, collections.podcasts,
+      ref => ref.orderBy('name'));
 
     this.podcasts.subscribe(() => this.loaded = true);
-
-    //Entity.getList<Podcast>(db, lists.podcast).subscribe(x => console.dir(x));
-
-    //this.podcasts = db.collection<Podcast>(lists.podcast).valueChanges();
-
-    //     //db.collection<Podcast>(lists.podcast).valueChanges().subscribe(x => console.dir(x));
-    //     db.collection<Podcast>(lists.podcast)
-    //       .snapshotChanges()
-    //       .map(actions => actions.map(
-    //         a => a.payload.doc.id
-    //       ))
-    // //      .subscribe(x => console.dir(x[0].payload.doc.data()))
-    // //      .subscribe(x => console.dir(x))
   }
 
   ngOnInit() {

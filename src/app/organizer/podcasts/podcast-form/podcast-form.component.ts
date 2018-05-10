@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { lists } from '../../../shared/lists';
+import { collections } from '../../../shared/collections';
 import { Podcast, PodcastSerie, PodcastFeed } from '../../../shared/podcast.model';
 import { Entity } from '../../../shared/entity.model';
 
@@ -25,10 +25,10 @@ export class PodcastFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let key = params['key'];
+      let id = params['id'];
 
-      if (key) {
-        Entity.getObject<Podcast>(this.db, lists.podcast, key)
+      if (id) {
+        Entity.getObject<Podcast>(this.db, collections.podcasts, id)
           .subscribe(p => this.podcast = p);
       }
       else {
@@ -40,8 +40,8 @@ export class PodcastFormComponent implements OnInit {
   save(): void {
     let toSave = Entity.toSaveable(this.podcast);
 
-    if (this.podcast.key) {
-      this.db.doc<Podcast>(`${lists.podcast}/${this.podcast.key}`)
+    if (this.podcast.id) {
+      this.db.doc<Podcast>(`${collections.podcasts}/${this.podcast.id}`)
         .update(toSave)
         .then(t => {
           console.log(`Podcast updated: ${JSON.stringify(toSave)}`);
@@ -49,7 +49,7 @@ export class PodcastFormComponent implements OnInit {
         });
     }
     else {
-      this.db.collection<Podcast>(lists.podcast)
+      this.db.collection<Podcast>(collections.podcasts)
         .add(toSave)
         .then(t => {
           console.log(`Podcast added: ${t.id}`);
@@ -61,10 +61,10 @@ export class PodcastFormComponent implements OnInit {
 
   delete() {
     if (confirm('Are you sure you want to delete this podcast?')) {
-      this.db.doc<Podcast>(`${lists.podcast}/${this.podcast.key}`)
+      this.db.doc<Podcast>(`${collections.podcasts}/${this.podcast.id}`)
         .delete()
         .then(t => {
-          console.log(`Podcast removed: ${this.podcast.key}`);
+          console.log(`Podcast removed: ${this.podcast.id}`);
           this.router.navigateByUrl('/podcasts');
         });
     }

@@ -17,7 +17,7 @@ const routes: Routes = [
       { path: '', component: IndexComponent, pathMatch: 'full' },
       { path: 'podcasts', component: PodcastsComponent },
       { path: 'podcasts/add', component: PodcastFormComponent },
-      { path: 'podcasts/:key', component: PodcastFormComponent },
+      { path: 'podcasts/:id', component: PodcastFormComponent },
       // { path: 'cadastros/categorias', component: CategoriasComponent },
       // { path: 'cadastros/contas', component: ContasComponent },
       // { path: 'cadastros/cartoes', component: CartoesComponent },

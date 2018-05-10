@@ -3,10 +3,10 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { FirebaseApp } from 'angularfire2';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, QueryFn } from 'angularfire2/firestore';
 
 export class Entity {
-    public key: string;
+    public id: string;
 
     public static toSaveable<T extends Entity>(entity: T): T {
         let saveable = Object.assign({}, entity as T);
@@ -25,27 +25,27 @@ export class Entity {
 
         convertArrays(saveable);
 
-        delete saveable['key'];
+        delete saveable.id;
         return saveable;
     }
 
-    public static getList<T extends Entity>(db: AngularFirestore, listPath: string): Observable<T[]> {
-        return db.collection<T>(listPath).snapshotChanges().pipe(map(
+    public static getList<T extends Entity>(db: AngularFirestore, listPath: string, queryFn?: QueryFn): Observable<T[]> {
+        return db.collection<T>(listPath, queryFn).snapshotChanges().pipe(map(
             actions => actions.map(
                 a => {
                     let entity = a.payload.doc.data() as T;
-                    entity.key = a.payload.doc.id;
+                    entity.id = a.payload.doc.id;
                     return entity;
                 }
             )
         ));
     }
 
-    public static getObject<T extends Entity>(db: AngularFirestore, listPath: string, key: string): Observable<T> {
-        return db.collection<T>(listPath).doc<T>(key).valueChanges().pipe(map(
+    public static getObject<T extends Entity>(db: AngularFirestore, listPath: string, id: string): Observable<T> {
+        return db.collection<T>(listPath).doc<T>(id).valueChanges().pipe(map(
             doc => {
                 let entity = doc as T;
-                entity.key = key;
+                entity.id = id;
                 return entity;
             }
         ));
