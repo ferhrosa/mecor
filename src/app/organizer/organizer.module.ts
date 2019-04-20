@@ -10,8 +10,8 @@ import {
   MatSelectModule, MatProgressBarModule, MatTooltipModule, MatChipsModule,
 } from '@angular/material';
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 
 import { Configurations } from '../shared/configurations.service';
 

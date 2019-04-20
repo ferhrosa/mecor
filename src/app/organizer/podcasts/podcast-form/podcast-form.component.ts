@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { collections } from '../../../shared/collections';
 import { Podcast, PodcastSerie, PodcastFeed } from '../../../shared/podcast.model';
 import { Entity } from '../../../shared/entity.model';

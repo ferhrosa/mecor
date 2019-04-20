@@ -5,11 +5,10 @@ Media Consumer Organizer
 
 ## Angular CLI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.4.
-
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 The command used to create the project was:
 
-`ng new mecor --verbose --skip-commit --routing --style scss --dir .`
+`ng new mecor --verbose --skip-commit --routing --style=scss --directory=.`
 
 ## Development server
 
@@ -21,7 +20,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Running unit tests
 

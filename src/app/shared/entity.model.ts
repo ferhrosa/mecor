@@ -2,8 +2,8 @@
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
-import { FirebaseApp } from 'angularfire2';
-import { AngularFirestore, QueryFn } from 'angularfire2/firestore';
+import { FirebaseApp } from '@angular/fire';
+import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 
 export class Entity {
     public id: string;
