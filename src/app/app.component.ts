@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Configurations } from './shared/configurations.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +7,4 @@ import { Configurations } from './shared/configurations.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  constructor(private router: Router) {
-    if (!Configurations.isConfigured()) {
-      this.router.navigateByUrl('/configure');
-    }
-  }
-
 }

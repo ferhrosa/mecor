@@ -13,7 +13,7 @@ import {
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 
-import { Configurations } from '../shared/configurations.service';
+import { tokens } from 'src/environments/tokens';
 
 import { IndexComponent } from './index/index.component';
 import { LayoutComponent } from './layout/layout.component';
@@ -34,7 +34,7 @@ import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-ep
     MatDatepickerModule, MatNativeDateModule, MatSelectModule,
     MatProgressBarModule, MatTooltipModule, MatChipsModule,
     // Firebase modules
-    AngularFireModule.initializeApp(Configurations.getFirebaseAppConfig()),
+    AngularFireModule.initializeApp(tokens.firebase),
     AngularFirestoreModule,
   ],
   declarations: [
@@ -46,6 +46,6 @@ import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-ep
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-  ]
+  ],
 })
 export class OrganizerModule { }

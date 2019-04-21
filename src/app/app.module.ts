@@ -8,13 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { OrganizerModule } from './organizer/organizer.module';
 
 import { AppComponent } from './app.component';
-import { ConfigureComponent } from './configure/configure.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfigureComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +22,7 @@ import { ConfigureComponent } from './configure/configure.component';
     OrganizerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }
