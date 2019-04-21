@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LayoutComponent } from './organizer/layout/layout.component';
-import { IndexComponent } from './organizer/index/index.component';
-import { PodcastsComponent } from './organizer/podcasts/podcasts/podcasts.component';
-import { PodcastFormComponent } from './organizer/podcasts/podcast-form/podcast-form.component';
+import { LayoutComponent } from './layout/layout.component';
+import { IndexComponent } from './index/index.component';
+import { PodcastsComponent } from './podcasts/podcasts/podcasts.component';
+import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.component';
 
 
 const routes: Routes = [

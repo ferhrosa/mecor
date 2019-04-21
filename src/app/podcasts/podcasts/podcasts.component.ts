@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { collections } from '../../../shared/collections';
-import { Entity } from '../../../shared/entity.model';
-import { Podcast } from './../../../shared/podcast.model';
+import { collections } from '../../shared/collections';
+import { Entity } from '../../shared/entity.model';
+import { Podcast } from './../../shared/podcast.model';
 
 
 @Component({
