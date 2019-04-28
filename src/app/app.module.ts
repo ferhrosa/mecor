@@ -21,7 +21,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
-import { LayoutComponent } from './layout/layout.component';
 import { PodcastsComponent } from './podcasts/podcasts/podcasts.component';
 import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.component';
 import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-episodes.component';
@@ -49,7 +48,6 @@ import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-ep
   declarations: [
     AppComponent,
     IndexComponent,
-    LayoutComponent,
     PodcastsComponent,
     PodcastFormComponent,
     PodcastEpisodesComponent,
