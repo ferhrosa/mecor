@@ -23,20 +23,19 @@ export class PodcastFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let id = params['id'];
+      const id = params.id;
 
       if (id) {
         Entity.getObject<Podcast>(this.db, collections.podcasts, id)
           .subscribe(p => this.podcast = p);
-      }
-      else {
+      } else {
         this.podcast = new Podcast();
       }
     });
   }
 
   save(): void {
-    let toSave = Entity.toSaveable(this.podcast);
+    const toSave = Entity.toSaveable(this.podcast);
 
     if (this.podcast.id) {
       this.db.doc<Podcast>(`${collections.podcasts}/${this.podcast.id}`)
@@ -45,15 +44,13 @@ export class PodcastFormComponent implements OnInit {
           console.log(`Podcast updated: ${JSON.stringify(toSave)}`);
           this.router.navigateByUrl('/podcasts');
         });
-    }
-    else {
+    } else {
       this.db.collection<Podcast>(collections.podcasts)
         .add(toSave)
         .then(t => {
           console.log(`Podcast added: ${t.id}`);
           this.router.navigateByUrl('/podcasts');
         });
-      //,(e: any) => console.log(e.message);
     }
   }
 
@@ -69,10 +66,10 @@ export class PodcastFormComponent implements OnInit {
   }
 
   addFeed(url: string) {
-    console.trace('passed addFeed2 / url: ' + url)
+    console.trace('passed addFeed / url: ' + url);
     if (url) {
       this.podcast.feeds = (this.podcast.feeds || []);
-      this.podcast.feeds.push({ url: url } as PodcastFeed);
+      this.podcast.feeds.push({ url } as PodcastFeed);
     }
   }
 
@@ -85,7 +82,7 @@ export class PodcastFormComponent implements OnInit {
   addSerie(feed: PodcastFeed, name: string) {
     if (name) {
       feed.series = (feed.series || []);
-      feed.series.push({ name: name } as PodcastSerie);
+      feed.series.push({ name } as PodcastSerie);
     }
   }
 
@@ -96,7 +93,7 @@ export class PodcastFormComponent implements OnInit {
   }
 
   addPattern(serie: PodcastSerie) {
-    let pattern = prompt('Name of the pattern do add:');
+    const pattern = prompt('Name of the pattern do add:');
     serie.patterns = (serie.patterns || []);
     if (pattern) { serie.patterns.push(pattern); }
   }

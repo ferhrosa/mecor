@@ -84,7 +84,7 @@
 
         <mat-list-item>
           <mat-form-field matLine>
-            <input matInput type="url" placeholder="URL for new feed" #newFeed (change)="addFeed2(newFeed.value); newFeed.value = ''; newFeed.focus();"
+            <input matInput type="url" placeholder="URL for new feed" #newFeed (change)="addFeed(newFeed.value); newFeed.value = ''; newFeed.focus();"
               matTooltip="Press TAB or exit this field to add the new feed">
           </mat-form-field>
         </mat-list-item>
