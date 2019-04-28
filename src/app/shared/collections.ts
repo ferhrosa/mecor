@@ -1,7 +1,8 @@
-import { environment } from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
-let root = `environments/${environment.firebaseEnvironment}/`;
+const root = `environments/${environment.firebaseEnvironment}/`;
 
 export const collections = {
     podcasts: `${root}podcasts`,
-}
+    series: `${root}series`,
+};

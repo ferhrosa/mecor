@@ -24,6 +24,8 @@ import { IndexComponent } from './index/index.component';
 import { PodcastsComponent } from './podcasts/podcasts/podcasts.component';
 import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.component';
 import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-episodes.component';
+import { SeriesComponent } from './series/series/series.component';
+import { SeriesFormComponent } from './series/series-form/series-form.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-ep
     PodcastsComponent,
     PodcastFormComponent,
     PodcastEpisodesComponent,
+    SeriesComponent,
+    SeriesFormComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
