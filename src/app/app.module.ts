@@ -13,7 +13,8 @@ import {
 } from '@angular/material';
 
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { tokens } from 'src/environments/tokens';
 
@@ -42,7 +43,7 @@ import { SeriesFormComponent } from './series/series-form/series-form.component'
     MatProgressBarModule, MatTooltipModule, MatChipsModule,
     // Firebase modules
     AngularFireModule.initializeApp(tokens.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule, AngularFireAuthModule,
     // Application modules
     AppRoutingModule,
     // OrganizerModule,

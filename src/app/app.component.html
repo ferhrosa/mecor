@@ -1,4 +1,9 @@
-<mat-sidenav-container>
+<div *ngIf="isAuthenticated === false" class="sign-in">
+    <h1 matLine>MECOR</h1>
+    <button mat-raised-button color="primary" type="button" (click)="logIn()">Sign in</button>
+</div>
+
+<mat-sidenav-container *ngIf="isAuthenticated">
     <mat-sidenav mode="side" opened="true" class="mat-elevation-z6">
 
         <mat-nav-list>
@@ -45,6 +50,15 @@
             <a mat-list-item routerLink="/books">
                 <mat-icon matListIcon>book</mat-icon>
                 <p matLine>Books</p>
+            </a>
+
+            <mat-divider></mat-divider>
+
+            <mat-list-item>{{ user.email }}</mat-list-item>
+
+            <a mat-list-item (click)="logOut()">
+                <mat-icon matListIcon>close</mat-icon>
+                <p matLine>Sign out</p>
             </a>
 
         </mat-nav-list>
