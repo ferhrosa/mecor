@@ -138,5 +138,8 @@
       }
     }
   },
-  "defaultProject": "mecor"
+  "defaultProject": "mecor",
+  "cli": {
+    "analytics": "f8e0a1f2-5058-4b5c-b14f-f153c06c2a68"
+  }
 }
