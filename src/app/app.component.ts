@@ -14,11 +14,11 @@ export class AppComponent implements OnInit {
   isAuthenticated: boolean = null;
   user: firebase.User;
 
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private auth: AngularFireAuth) {
   }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe(user => {
+    this.auth.authState.subscribe(user => {
       if (user) {
         this.isAuthenticated = true;
         this.user = user;
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   logIn() {
     let provider = new firebase.auth.GoogleAuthProvider();
 
-    return this.afAuth.auth
+    return this.auth
       .signInWithPopup(provider)
       .then(
         res => {
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
   }
 
   logOut() {
-    this.afAuth.auth.signOut();
+    this.auth.signOut();
     this.isAuthenticated = false;
   }
 }
