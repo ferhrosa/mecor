@@ -1,11 +1,15 @@
-<button mat-raised-button color="primary" type="button" routerLink="/podcasts/add">Add</button>
+<div class="container">
+  <button mat-raised-button color="primary" type="button" routerLink="/podcasts/add">Add</button>
 
-<mat-card style="margin-top: 15px;">
-  <mat-card-title>Podcasts</mat-card-title>
-  <mat-card-content>
-    <mat-progress-bar *ngIf="!loaded" mode="indeterminate"></mat-progress-bar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/podcasts/{{podcast.id}}" *ngFor="let podcast of podcasts | async"> {{ podcast.name }} </a>
-    </mat-nav-list>
-  </mat-card-content>
-</mat-card>
+  <mat-card style="margin-top: 15px;">
+    <mat-card-title>Podcasts</mat-card-title>
+    <mat-card-content>
+      <mat-progress-bar *ngIf="!loaded" mode="indeterminate"></mat-progress-bar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/podcasts/{{podcast.id}}" *ngFor="let podcast of podcasts | async"> {{ podcast.name }} </a>
+      </mat-nav-list>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
