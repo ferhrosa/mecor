@@ -1,9 +1,0 @@
-C:\Dev\GitHub\ferhrosa\mecor\backend\bin\Debug\appsettings.Development.json
-C:\Dev\GitHub\ferhrosa\mecor\backend\bin\Debug\appsettings.json
-C:\Dev\GitHub\ferhrosa\mecor\backend\bin\Debug\Properties\launchSettings.json
-C:\Dev\GitHub\ferhrosa\mecor\backend\bin\Debug\Mecor.Api.exe
-C:\Dev\GitHub\ferhrosa\mecor\backend\bin\Debug\Mecor.Api.dll
-C:\Dev\GitHub\ferhrosa\mecor\backend\bin\Debug\Mecor.Api.pdb
-C:\Dev\GitHub\ferhrosa\mecor\backend\obj\Debug\docker-compose.dcprojAssemblyReference.cache
-C:\Dev\GitHub\ferhrosa\mecor\backend\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
-C:\Dev\GitHub\ferhrosa\mecor\backend\obj\Debug\docker-compose.dcproj.CopyComplete
