@@ -1,0 +1,29 @@
+services:
+  mecor.api:
+    build:
+      context: C:\Dev\GitHub\ferhrosa\mecor\backend
+      dockerfile: Mecor.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: mecorapi
+    ports:
+    - target: 80
+    - target: 443
+    volumes:
+    - C:\Users\ferhr\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\ferhr\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+  mongodb:
+    environment:
+      MONGO_INITDB_DATABASE: mecor
+    image: mongo
+    ports:
+    - published: 27017
+      target: 27017
+    - published: 27018
+      target: 27018
+    - published: 27019
+      target: 27019
+    volumes:
+    - C:\Dev\GitHub\ferhrosa\mecor\backend\mongo-volume:/data/db:rw
+version: '3.4'
