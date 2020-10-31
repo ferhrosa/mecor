@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mecor.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -23,6 +24,9 @@ namespace Mecor.Api.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Fake random weather forecast data
+        /// </summary>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
