@@ -1,11 +1,17 @@
 using Mecor.Api.Infra;
+using Mecor.Api.Model;
+using Mecor.Api.Repositories.Interfaces;
+using Mecor.Api.Repositories.MongoDb;
+using Mecor.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using System;
 using System.IO;
 using System.Linq;
@@ -27,6 +33,13 @@ namespace Mecor.Api
         {
             services.AddControllers();
 
+            services.AddSingleton(_ => new MongoClient(Configuration["Mongodb:ConnectionString"]).GetDatabase(Configuration["Mongodb:Database"]));
+
+            services.AddScoped<IUserRepository, UserMongoDbRepository>();
+            services.AddScoped<UserService>();
+            services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
+
+
             var builder = services.AddIdentityServer(options =>
             {
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
@@ -36,7 +49,8 @@ namespace Mecor.Api
             builder.AddInMemoryIdentityResources(Config.IdentityResources);
             builder.AddInMemoryApiScopes(Config.ApiScopes);
             builder.AddInMemoryClients(Config.Clients);
-            builder.AddTestUsers(Config.Users);
+            builder.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
+            builder.Services.AddScoped<IUserRepository, UserMongoDbRepository>();
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
@@ -118,9 +132,11 @@ namespace Mecor.Api
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUI(options =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mecor API");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Mecor API");
+                options.OAuthClientId(Config.Clients.FirstOrDefault()?.ClientId);
+                options.OAuthAppName(Config.Clients.FirstOrDefault()?.ClientName);
             });
         }
     }

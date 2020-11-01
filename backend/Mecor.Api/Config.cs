@@ -10,7 +10,7 @@ namespace Mecor.Api
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
-                new IdentityResources.OpenId()
+                new IdentityResources.Email(),
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -25,28 +25,12 @@ namespace Mecor.Api
                 new Client
                 {
                     ClientId = "mecor.app",
+                    ClientName = "Mecor APP",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     RequireClientSecret = false,
                     AllowedScopes = ApiScopes.Select(s => s.Name).ToList(),
                 }
             };
-
-        public static List<TestUser> Users =>
-            new TestUser[]
-            {
-                new TestUser
-                {
-                    SubjectId = "1",
-                    Username = "alice",
-                    Password = "password"
-                },
-                new TestUser
-                {
-                    SubjectId = "2",
-                    Username = "bob",
-                    Password = "password"
-                }
-            }.ToList();
 
     }
 }
