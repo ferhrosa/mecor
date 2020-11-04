@@ -10,33 +10,30 @@ namespace Mecor.Api.Infra
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            var hasAuthorize =
-              context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any()
-              || context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any();
+            if (!context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any()
+              && !context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any())
+            { return; }
 
-            if (hasAuthorize)
+            operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
+            operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+
+            operation.Security = new List<OpenApiSecurityRequirement>
             {
-                operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
-                operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
-
-                operation.Security = new List<OpenApiSecurityRequirement>
+                new OpenApiSecurityRequirement
                 {
-                    new OpenApiSecurityRequirement
                     {
-                        [
-                            new OpenApiSecurityScheme
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
                             {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = SecuritySchemeType.OAuth2.ToString(),
-                                },
-                            }
-                        ] = new[] { "mecor.api" }
+                                Type = ReferenceType.SecurityScheme,
+                                Id = SecuritySchemeType.OAuth2.ToString(),
+                            },
+                        },
+                        Config.ApiScopes.Select(s => s.Name).ToArray()
                     }
-                };
-
-            }
+                }
+            };
         }
     }
 

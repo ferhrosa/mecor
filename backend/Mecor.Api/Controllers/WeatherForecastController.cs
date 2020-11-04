@@ -8,7 +8,7 @@ using System.Linq;
 namespace Mecor.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("weather-forecast")]
     [Authorize]
     public class WeatherForecastController : ControllerBase
     {

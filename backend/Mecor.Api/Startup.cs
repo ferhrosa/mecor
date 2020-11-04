@@ -3,9 +3,11 @@ using Mecor.Api.Model;
 using Mecor.Api.Repositories.Interfaces;
 using Mecor.Api.Repositories.MongoDb;
 using Mecor.Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace Mecor.Api
 {
     public class Startup
@@ -39,7 +42,6 @@ namespace Mecor.Api
             services.AddScoped<UserService>();
             services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
 
-
             var builder = services.AddIdentityServer(options =>
             {
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
@@ -57,16 +59,20 @@ namespace Mecor.Api
 
             const string authority = "https://localhost:5001";
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = authority;
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = authority;
 
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateAudience = false
-                    };
-                });
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
+            });
 
             // Register the Swagger generator, defining 1 or more Swagger documents.
             services.AddSwaggerGen(options =>

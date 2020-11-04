@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mecor.Api.Model.Inputs;
+﻿using Mecor.Api.Model.Inputs;
 using Mecor.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Mecor.Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("signup")]
     [ApiController]
     public class SignupController : ControllerBase
     {
@@ -21,6 +18,7 @@ namespace Mecor.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(BadRequestResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignupUser([FromBody] UserSignupInput input)
         {
             bool success = await userService.CreateUserAsync(input.Email, input.Name, input.Password);
