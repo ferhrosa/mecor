@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseEnvironment: 'dev',
+  apiBaseUrl: 'https://localhost:5001/',
 };
 
 /*

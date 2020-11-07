@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { collections } from '../../shared/collections';
-import { Podcast, PodcastSerie, PodcastFeed } from '../../shared/podcast.model';
-import { Entity } from '../../shared/entity.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Podcast, PodcastFeed, PodcastSerie } from '../../shared/podcast.model';
 
 @Component({
   selector: 'app-podcast-form',
@@ -16,7 +13,6 @@ export class PodcastFormComponent implements OnInit {
   pattern = '';
 
   constructor(
-    private db: AngularFirestore,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -26,8 +22,8 @@ export class PodcastFormComponent implements OnInit {
       const id = params.id;
 
       if (id) {
-        Entity.getObject<Podcast>(this.db, collections.podcasts, id)
-          .subscribe(p => this.podcast = p);
+        // Entity.getObject<Podcast>(this.db, collections.podcasts, id)
+        //   .subscribe(p => this.podcast = p);
       } else {
         this.podcast = new Podcast();
       }
@@ -35,33 +31,31 @@ export class PodcastFormComponent implements OnInit {
   }
 
   save(): void {
-    const toSave = Entity.toSaveable(this.podcast);
-
     if (this.podcast.id) {
-      this.db.doc<Podcast>(`${collections.podcasts}/${this.podcast.id}`)
-        .update(toSave)
-        .then(t => {
-          console.log(`Podcast updated: ${JSON.stringify(toSave)}`);
-          this.router.navigateByUrl('/podcasts');
-        });
+      // this.db.doc<Podcast>(`${collections.podcasts}/${this.podcast.id}`)
+      //   .update(toSave)
+      //   .then(t => {
+      //     console.log(`Podcast updated: ${JSON.stringify(toSave)}`);
+      //     this.router.navigateByUrl('/podcasts');
+      //   });
     } else {
-      this.db.collection<Podcast>(collections.podcasts)
-        .add(toSave)
-        .then(t => {
-          console.log(`Podcast added: ${t.id}`);
-          this.router.navigateByUrl('/podcasts');
-        });
+      // this.db.collection<Podcast>(collections.podcasts)
+      //   .add(toSave)
+      //   .then(t => {
+      //     console.log(`Podcast added: ${t.id}`);
+      //     this.router.navigateByUrl('/podcasts');
+      //   });
     }
   }
 
   delete() {
     if (confirm('Are you sure you want to delete this podcast?')) {
-      this.db.doc<Podcast>(`${collections.podcasts}/${this.podcast.id}`)
-        .delete()
-        .then(t => {
-          console.log(`Podcast removed: ${this.podcast.id}`);
-          this.router.navigateByUrl('/podcasts');
-        });
+      // this.db.doc<Podcast>(`${collections.podcasts}/${this.podcast.id}`)
+      //   .delete()
+      //   .then(t => {
+      //     console.log(`Podcast removed: ${this.podcast.id}`);
+      //     this.router.navigateByUrl('/podcasts');
+      //   });
     }
   }
 

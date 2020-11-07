@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Series } from 'src/app/shared/series.model';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Entity } from 'src/app/shared/entity.model';
-import { collections } from 'src/app/shared/collections';
-import { Podcast } from 'src/app/shared/podcast.model';
 
 @Component({
   selector: 'app-series-form',
@@ -17,7 +13,6 @@ export class SeriesFormComponent implements OnInit {
   pattern = '';
 
   constructor(
-    private db: AngularFirestore,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -27,8 +22,8 @@ export class SeriesFormComponent implements OnInit {
       const id = params.id;
 
       if (id) {
-        Entity.getObject<Series>(this.db, collections.series, id)
-          .subscribe(p => this.item = p);
+        // Entity.getObject<Series>(this.db, collections.series, id)
+        //   .subscribe(p => this.item = p);
       } else {
         this.item = new Series();
       }
@@ -36,34 +31,32 @@ export class SeriesFormComponent implements OnInit {
   }
 
   save(): void {
-    const toSave = Entity.toSaveable(this.item);
-
     if (this.item.id) {
-      this.db.doc<Series>(`${collections.series}/${this.item.id}`)
-        .update(toSave)
-        .then(t => {
-          console.log(`Series updated: ${JSON.stringify(toSave)}`);
-          this.router.navigateByUrl('/series');
-        });
+      // this.db.doc<Series>(`${collections.series}/${this.item.id}`)
+      //   .update(toSave)
+      //   .then(t => {
+      //     console.log(`Series updated: ${JSON.stringify(toSave)}`);
+      //     this.router.navigateByUrl('/series');
+      //   });
     } else {
-      this.db.collection<Series>(collections.series)
-        .add(toSave)
-        .then(t => {
-          console.log(`Series added: ${t.id}`);
-          this.router.navigateByUrl('/series');
-        });
+      // this.db.collection<Series>(collections.series)
+      //   .add(toSave)
+      //   .then(t => {
+      //     console.log(`Series added: ${t.id}`);
+      //     this.router.navigateByUrl('/series');
+      //   });
       //,(e: any) => console.log(e.message);
     }
   }
 
   delete() {
     if (confirm('Are you sure you want to delete this series?')) {
-      this.db.doc<Series>(`${collections.series}/${this.item.id}`)
-        .delete()
-        .then(t => {
-          console.log(`Series removed: ${this.item.id}`);
-          this.router.navigateByUrl('/series');
-        });
+      // this.db.doc<Series>(`${collections.series}/${this.item.id}`)
+      //   .delete()
+      //   .then(t => {
+      //     console.log(`Series removed: ${this.item.id}`);
+      //     this.router.navigateByUrl('/series');
+      //   });
     }
   }
 

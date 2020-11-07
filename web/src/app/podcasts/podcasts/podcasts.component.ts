@@ -1,12 +1,6 @@
-import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-
-import { AngularFirestore } from '@angular/fire/firestore';
-
-import { collections } from '../../shared/collections';
-import { Entity } from '../../shared/entity.model';
+import { Observable } from 'rxjs';
 import { Podcast } from './../../shared/podcast.model';
-
 
 @Component({
   selector: 'app-podcasts',
@@ -18,11 +12,11 @@ export class PodcastsComponent implements OnInit {
   podcasts: Observable<Podcast[]>;
   loaded = false;
 
-  constructor(private db: AngularFirestore) {
-    this.podcasts = Entity.getList<Podcast>(db, collections.podcasts,
-      ref => ref.orderBy('name'));
+  constructor() {
+    // this.podcasts = Entity.getList<Podcast>(db, collections.podcasts,
+    //   ref => ref.orderBy('name'));
 
-    this.podcasts.subscribe(() => this.loaded = true);
+    // this.podcasts.subscribe(() => this.loaded = true);
   }
 
   ngOnInit() {

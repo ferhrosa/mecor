@@ -1,10 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -19,23 +15,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-
-import { tokens } from 'src/environments/tokens';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
-import { IndexComponent } from './index/index.component';
-import { PodcastsComponent } from './podcasts/podcasts/podcasts.component';
-import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.component';
+import { HomeComponent } from './home/home.component';
 import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-episodes.component';
-import { SeriesComponent } from './series/series/series.component';
+import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.component';
+import { PodcastsComponent } from './podcasts/podcasts/podcasts.component';
 import { SeriesFormComponent } from './series/series-form/series-form.component';
-
+import { SeriesComponent } from './series/series/series.component';
 
 @NgModule({
   imports: [
@@ -49,16 +39,13 @@ import { SeriesFormComponent } from './series/series-form/series-form.component'
     MatButtonModule, MatCardModule, MatIconModule, MatInputModule,
     MatDatepickerModule, MatNativeDateModule, MatSelectModule,
     MatProgressBarModule, MatTooltipModule, MatChipsModule,
-    // Firebase modules
-    AngularFireModule.initializeApp(tokens.firebase),
-    AngularFirestoreModule, AngularFireAuthModule,
     // Application modules
     AppRoutingModule,
     // OrganizerModule,
   ],
   declarations: [
     AppComponent,
-    IndexComponent,
+    HomeComponent,
     PodcastsComponent,
     PodcastFormComponent,
     PodcastEpisodesComponent,

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  firebaseEnvironment: 'prod',
+  apiBaseUrl: 'https://api.mecor.example.com/',
 };
