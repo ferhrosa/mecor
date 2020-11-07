@@ -13,6 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System;
 using System.IO;
@@ -34,13 +37,22 @@ namespace Mecor.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
             services.AddControllers();
 
+            // MongoDB
+            BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
             services.AddSingleton(_ => new MongoClient(Configuration["Mongodb:ConnectionString"]).GetDatabase(Configuration["Mongodb:Database"]));
 
+            // User
             services.AddScoped<IUserRepository, UserMongoDbRepository>();
             services.AddScoped<UserService>();
             services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
+
+            // Podcast
+            services.AddScoped<IPodcastRepository, PodcastMongoDbRepository>();
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -123,6 +135,8 @@ namespace Mecor.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseIdentityServer();
 

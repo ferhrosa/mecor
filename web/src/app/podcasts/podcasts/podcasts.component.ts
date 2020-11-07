@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PodcastService } from '../shared/podcast.service';
 import { Podcast } from './../../shared/podcast.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-podcasts',
@@ -12,7 +14,9 @@ export class PodcastsComponent implements OnInit {
   podcasts: Observable<Podcast[]>;
   loaded = false;
 
-  constructor() {
+  constructor(
+    private podcastService: PodcastService,
+  ) {
     // this.podcasts = Entity.getList<Podcast>(db, collections.podcasts,
     //   ref => ref.orderBy('name'));
 
@@ -20,6 +24,7 @@ export class PodcastsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.podcasts = this.podcastService.getAll().pipe(take(1));
   }
 
 }

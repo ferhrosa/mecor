@@ -6,10 +6,10 @@ export class Podcast {
 
 export class PodcastFeed {
   url: string;
-  series: Array<PodcastSerie>;
+  series: Array<PodcastSeries>;
 }
 
-export class PodcastSerie {
+export class PodcastSeries {
   name: string;
   patterns: Array<string>;
 }

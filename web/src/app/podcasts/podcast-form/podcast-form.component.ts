@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Podcast, PodcastFeed, PodcastSerie } from '../../shared/podcast.model';
+import { Podcast, PodcastFeed, PodcastSeries } from '../../shared/podcast.model';
 
 @Component({
   selector: 'app-podcast-form',
@@ -76,23 +76,23 @@ export class PodcastFormComponent implements OnInit {
   addSerie(feed: PodcastFeed, name: string) {
     if (name) {
       feed.series = (feed.series || []);
-      feed.series.push({ name } as PodcastSerie);
+      feed.series.push({ name } as PodcastSeries);
     }
   }
 
-  removeSerie(feed: PodcastFeed, serie: PodcastSerie) {
+  removeSerie(feed: PodcastFeed, serie: PodcastSeries) {
     if (confirm('Are you sure you want to remove this podcast serie?')) {
       feed.series.splice(feed.series.indexOf(serie), 1);
     }
   }
 
-  addPattern(serie: PodcastSerie) {
+  addPattern(serie: PodcastSeries) {
     const pattern = prompt('Name of the pattern do add:');
     serie.patterns = (serie.patterns || []);
     if (pattern) { serie.patterns.push(pattern); }
   }
 
-  removePattern(serie: PodcastSerie, pattern: string) {
+  removePattern(serie: PodcastSeries, pattern: string) {
     if (confirm('Are you sure you want to remove this podcast serie pattern?')) {
       serie.patterns.splice(serie.patterns.indexOf(pattern), 1);
     }

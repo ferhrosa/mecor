@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,12 +25,14 @@ import { HomeComponent } from './home/home.component';
 import { PodcastEpisodesComponent } from './podcasts/podcast-episodes/podcast-episodes.component';
 import { PodcastFormComponent } from './podcasts/podcast-form/podcast-form.component';
 import { PodcastsComponent } from './podcasts/podcasts/podcasts.component';
+import { PodcastService } from './podcasts/shared/podcast.service';
 import { SeriesFormComponent } from './series/series-form/series-form.component';
 import { SeriesComponent } from './series/series/series.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     RouterModule,
     FormsModule,
     BrowserModule,
@@ -41,7 +44,6 @@ import { SeriesComponent } from './series/series/series.component';
     MatProgressBarModule, MatTooltipModule, MatChipsModule,
     // Application modules
     AppRoutingModule,
-    // OrganizerModule,
   ],
   declarations: [
     AppComponent,
@@ -54,6 +56,7 @@ import { SeriesComponent } from './series/series/series.component';
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    PodcastService,
   ],
   bootstrap: [AppComponent],
 })
