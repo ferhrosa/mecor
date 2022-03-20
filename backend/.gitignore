@@ -367,3 +367,5 @@ FodyWeavers.xsd
 
 mongo-volume
 tempkey.jwk
+
+appsettings.*.json
