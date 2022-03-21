@@ -5,7 +5,6 @@ namespace Mecor.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-//[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Authorize]
 public class WeatherForecastController : ControllerBase
 {

@@ -1,7 +1,8 @@
+﻿using System.Net;
 using Mecor.Api.Options;
+using Mecor.Api.Services;
 using Mecor.Api.Swagger;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Logging;
+using Mecor.Domain.User;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -13,30 +14,34 @@ services.Configure<AuthenticationOptions>(authenticationOptionsSection);
 
 // Add services to the container.
 
-// Add authentication using Google (with OAuth2).
 services
-    //.AddAuthentication()
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    //.AddAuthentication("Google")
-    //.AddAuthentication(Microsoft.AspNetCore.Authentication.Google.GoogleDefaults.AuthenticationScheme)
-    //.AddAuthentication(options =>
-    //{
-    //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    //})
-    //.AddGoogle(options =>
-    //{
-    //    options.ClientId = authenticationOptions.Google.ClientId;
-    //    options.ClientSecret = authenticationOptions.Google.ClientSecret;
-    //    //options.
-    //})
-    .AddJwtBearer(options =>
-    {
-        options.UseGoogle(authenticationOptions.Google.ClientId);
-    })
-    ;
+    .AddDefaultIdentity<User>()
+    .AddUserStore<UserStore>();
 
-IdentityModelEventSource.ShowPII = true;
+services.ConfigureApplicationCookie(options =>
+{
+    options.Events = new()
+    {
+        OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return Task.CompletedTask;
+        },
+        OnRedirectToAccessDenied = context =>
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            return Task.CompletedTask;
+        },
+    };
+});
+
+services
+    .AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = authenticationOptions.Google.ClientId;
+        options.ClientSecret = authenticationOptions.Google.ClientSecret;
+    });
 
 SwaggerStartup.ConfigureServices(services);
 
@@ -47,13 +52,17 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-SwaggerStartup.Configure(app, authenticationOptions);
+SwaggerStartup.Configure(app);
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
