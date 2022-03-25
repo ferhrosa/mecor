@@ -7,7 +7,7 @@ services:
     container_name: mecor_api
     build:
       context: .
-      dockerfile: Mecor.Api/Dockerfile
+      dockerfile: src/Api/Dockerfile
     depends_on:
       - mecor.mongo
 

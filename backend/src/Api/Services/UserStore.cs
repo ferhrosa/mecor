@@ -1,52 +1,49 @@
 ﻿using Mecor.Domain.User;
+using Mecor.Domain.User.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Mecor.Api.Services;
 
 public class UserStore : IUserStore<User>, IUserLoginStore<User>, IUserEmailStore<User>
 {
-    private static readonly List<User> users = new();
+    private readonly IUserRepository _userRepository;
+
+    public UserStore(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
 
     public void Dispose() { }
 
-    public Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
+    public async Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
     {
-        if (users.Any(u => u.Id == user.Id)) { return Task.FromResult(IdentityResult.Failed()); }
-
-        users.Add(user);
-
-        return Task.FromResult(IdentityResult.Success);
+        await _userRepository.AddAsync(user, cancellationToken);
+        return IdentityResult.Success;
     }
 
-    public Task<IdentityResult> UpdateAsync(User user, CancellationToken cancellationToken)
+    public async Task<IdentityResult> UpdateAsync(User user, CancellationToken cancellationToken)
     {
-        var existingUser = users.SingleOrDefault(u => u.Id == user.Id);
-
-        if (existingUser == null) { return Task.FromResult(IdentityResult.Failed()); }
-
-        users.Remove(existingUser);
-        users.Add(user);
-
-        return Task.FromResult(IdentityResult.Success);
+        await _userRepository.UpdateAsync(user, cancellationToken);
+        return IdentityResult.Success;
     }
 
-    public Task<IdentityResult> DeleteAsync(User user, CancellationToken cancellationToken)
-        => Task.FromResult(
-            users.RemoveAll(u => u.Id == user.Id) > 0
-            ? IdentityResult.Success
-            : IdentityResult.Failed());
+    public async Task<IdentityResult> DeleteAsync(User user, CancellationToken cancellationToken)
+    {
+        await _userRepository.RemoveAsync(user.Id, cancellationToken);
+        return IdentityResult.Success;
+    }
 
     public Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken)
-        => Task.FromResult(users.FirstOrDefault(u => u.Id == userId));
+        => _userRepository.GetSingleByIdAsync(userId, cancellationToken);
 
     public Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
-        => Task.FromResult(users.FirstOrDefault(u => u.NormalizedUserName == normalizedUserName));
+        => _userRepository.GetSingleByNormalizedUserNameAsync(normalizedUserName, cancellationToken);
 
     public Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
-        => Task.FromResult(users.FirstOrDefault(u => u.NormalizedEmail == normalizedEmail));
+        => _userRepository.GetSingleByNormalizedEmailAsync(normalizedEmail, cancellationToken);
 
     public Task<User> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
-        => Task.FromResult(users.FirstOrDefault(u => u.Logins.TryGetValue(loginProvider, out var login) && login.ProviderKey == providerKey));
+        => _userRepository.GetSingleByLoginAsync(loginProvider, providerKey, cancellationToken);
 
     public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
         => Task.FromResult(user.Id);

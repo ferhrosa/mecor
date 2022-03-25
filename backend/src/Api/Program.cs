@@ -3,6 +3,7 @@ using Mecor.Api.Options;
 using Mecor.Api.Services;
 using Mecor.Api.Swagger;
 using Mecor.Domain.User;
+using Mecor.Infra.Storage.MongoDB;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -44,6 +45,8 @@ services
     });
 
 SwaggerStartup.ConfigureServices(services);
+
+MongoStartup.ConfigureServices(services, configuration);
 
 services.AddControllers();
 services.AddRazorPages();
