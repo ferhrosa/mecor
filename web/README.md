@@ -1,5 +1,5 @@
 # mecor
-Media Consumer Organizer
+Media Collection Organizer
 
 -------------------------
 
