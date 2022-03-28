@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +28,8 @@ import { PodcastsComponent } from './podcasts/podcasts/podcasts.component';
 import { PodcastService } from './podcasts/shared/podcast.service';
 import { SeriesFormComponent } from './series/series-form/series-form.component';
 import { SeriesComponent } from './series/series/series.component';
+import { UserService } from './shared/user.service';
+import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
 
 @NgModule({
   imports: [
@@ -56,7 +58,9 @@ import { SeriesComponent } from './series/series/series.component';
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true },
     PodcastService,
+    UserService,
   ],
   bootstrap: [AppComponent],
 })

@@ -3,6 +3,7 @@
 public interface IUserRepository
 {
     Task<User> GetSingleByIdAsync(string userId, CancellationToken cancellationToken = default);
+    Task<User> GetSingleByUserNameAsync(string userName, CancellationToken cancellationToken = default);
     Task<User> GetSingleByNormalizedUserNameAsync(string normalizedUserName, CancellationToken cancellationToken = default);
     Task<User> GetSingleByNormalizedEmailAsync(string normalizedEmail, CancellationToken cancellationToken = default);
     Task<User> GetSingleByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken = default);

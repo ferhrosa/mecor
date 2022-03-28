@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Mecor.Api;
 using Mecor.Api.Options;
 using Mecor.Api.Services;
 using Mecor.Api.Swagger;
@@ -13,6 +14,10 @@ var authenticationOptionsSection = configuration.GetSection(AuthenticationOption
 var authenticationOptions = authenticationOptionsSection.Get<AuthenticationOptions>();
 services.Configure<AuthenticationOptions>(authenticationOptionsSection);
 
+var corsOptionsSection = configuration.GetSection(CorsOptions.Key);
+var corsOptions = corsOptionsSection.Get<CorsOptions>();
+services.Configure<CorsOptions>(corsOptionsSection);
+
 // Add services to the container.
 
 services
@@ -23,6 +28,11 @@ services.ConfigureApplicationCookie(options =>
 {
     options.Events = new()
     {
+        OnSigningIn = context =>
+        {
+            context.CookieOptions.SameSite = SameSiteMode.None;
+            return Task.CompletedTask;
+        },
         OnRedirectToLogin = context =>
         {
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -44,6 +54,19 @@ services
         options.ClientSecret = authenticationOptions.Google.ClientSecret;
     });
 
+services.AddCors(setup =>
+{
+    setup.AddDefaultPolicy(p =>
+    {
+        p.AllowAnyHeader();
+        p.AllowAnyMethod();
+        p.WithOrigins(corsOptions.AllowedOrigins);
+        p.AllowCredentials();
+    });
+});
+
+services.AddAutoMapper(typeof(MapperProfile));
+
 SwaggerStartup.ConfigureServices(services);
 
 MongoStartup.ConfigureServices(services, configuration);
@@ -59,6 +82,8 @@ SwaggerStartup.Configure(app);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseCors();
 
 app.UseRouting();
 

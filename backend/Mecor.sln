@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Application", "1 - Appl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{1E9E498E-01D7-4D17-8F7F-75A329A18E71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB", "src\Infra\Storage\MongoDB\MongoDB.csproj", "{975B0A17-89C3-420A-AFAE-258B2F0C2D9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDB", "src\Infra\Storage\MongoDB\MongoDB.csproj", "{975B0A17-89C3-420A-AFAE-258B2F0C2D9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

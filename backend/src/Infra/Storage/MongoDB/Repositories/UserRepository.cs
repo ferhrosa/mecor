@@ -19,6 +19,9 @@ internal sealed class UserRepository : IUserRepository
     public Task<User> GetSingleByNormalizedUserNameAsync(string normalizedUserName, CancellationToken cancellationToken = default)
         => _collection.Find(FilterByNormalizedUserName(normalizedUserName)).FirstOrDefaultAsync(cancellationToken);
 
+    public Task<User> GetSingleByUserNameAsync(string userName, CancellationToken cancellationToken = default)
+        => _collection.Find(FilterByUserName(userName)).FirstOrDefaultAsync(cancellationToken);
+
     public Task<User> GetSingleByNormalizedEmailAsync(string normalizedEmail, CancellationToken cancellationToken = default)
         => _collection.Find(FilterByNormalizedEmail(normalizedEmail)).FirstOrDefaultAsync(cancellationToken);
 
@@ -36,6 +39,9 @@ internal sealed class UserRepository : IUserRepository
 
     private static FilterDefinition<User> FilterById(string userId)
         => Builders<User>.Filter.Eq(u => u.Id, userId);
+
+    private static FilterDefinition<User> FilterByUserName(string userName)
+        => Builders<User>.Filter.Eq(u => u.UserName, userName);
 
     private static FilterDefinition<User> FilterByNormalizedUserName(string normalizedUserName)
         => Builders<User>.Filter.Eq(u => u.NormalizedUserName, normalizedUserName);

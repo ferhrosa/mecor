@@ -11,7 +11,7 @@ export class HttpServiceBase {
 
   protected apiUrl(...parts: string[]): string {
     return environment.apiBaseUrl.concat(
-      parts?.map(s => s.replace(/\//g, '')).join('/')
+      parts?.map(s => s.replace(/^\//g, '').replace(/\/$/g, '')).join('/')
     );
   }
 

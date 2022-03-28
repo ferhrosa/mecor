@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'https://localhost:7027/',
+  get cleanedApiBaseUrl(): string { return this.apiBaseUrl.replace(/\/$/, ''); }
 };
 
 /*
