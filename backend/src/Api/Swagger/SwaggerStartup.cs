@@ -13,7 +13,7 @@ public static class SwaggerStartup
             setup.SwaggerDoc("v1", new()
             {
                 Title = "MECOR",
-                Description = "Media Collection Organizer",
+                Description = "Media Consumer Organizer",
                 Contact = new()
                 {
                     Name = "Fernando Henrique Rosa",

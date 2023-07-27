@@ -17,6 +17,6 @@ services:
     environment:
       - MONGO_INITDB_DATABASE=mecor
     volumes:
-      - ./mongo-volume:/data/db
+      - ./.volumes/mongo:/data/db
     ports:
       - 55017:27017

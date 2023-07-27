@@ -365,6 +365,8 @@ FodyWeavers.xsd
 ##################################
 # Project
 
+.volumes/
+
 mongo-volume
 tempkey.jwk
 

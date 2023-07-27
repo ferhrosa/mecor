@@ -1,5 +1,7 @@
-# mecor
-Media Collection Organizer
+# MECOR (Media Consumer Organizer)
+
+Web frontend for general usage.
+
 
 -------------------------
 
