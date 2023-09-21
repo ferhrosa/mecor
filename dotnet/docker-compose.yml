@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+
+  mecor.api:
+    image: ${DOCKER_REGISTRY-}mecorapi
+    container_name: mecor_api
+    build:
+      context: .
+      dockerfile: src/Api/Dockerfile
+    depends_on:
+      - mecor.mongo
+
+  mecor.mongo:
+    image: mongo:latest
+    container_name: mecor_mongo
+    environment:
+      - MONGO_INITDB_DATABASE=mecor
+    volumes:
+      - ./.volumes/mongo:/data/db
+    ports:
+      - 55017:27017
